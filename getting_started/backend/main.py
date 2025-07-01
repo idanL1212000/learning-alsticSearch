@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse
 
-from config import INDEX_NAME
+from config import INDEX_NAME_DEFAULT, INDEX_NAME_N_GRAM
 from utils import get_es_client
 
 app = FastAPI()
@@ -45,7 +45,7 @@ async def search(search_query:str, skip: int = 0, limit: int = 10, year: str | N
             }
 
         response = es_client.search(
-            index=INDEX_NAME,
+            index=INDEX_NAME_N_GRAM,
             body={
                 "query": query,
                 "from": skip,
@@ -78,7 +78,7 @@ async def get_docs_per_year_count(search_query: str) -> dict:
         es_client = get_es_client(max_retries=1, sleep_time=0)
 
         response = es_client.search(
-            index=INDEX_NAME,
+            index=INDEX_NAME_N_GRAM,
             body={
                 "query": {
                     "multi_match": {

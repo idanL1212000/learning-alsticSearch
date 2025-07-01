@@ -12,7 +12,6 @@ def get_es_client(max_retries: int = 5, sleep_time: int = 5) -> Elasticsearch:
             es_client = Elasticsearch(ES_CLIENT_URL)
             client_info = es_client.info()
             pprint("Connected To Elasticsearch!")
-            pprint(f'Cluster info:\n{client_info}')
             return es_client
         except Exception:
             pprint("Could not connect to Elasticsearch, retrying...")
